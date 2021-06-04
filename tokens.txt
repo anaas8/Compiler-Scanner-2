@@ -1,0 +1,46 @@
+Divisio,Class
+InferedFrom,Inheritance
+WhetherDo,Condition
+Else,Condition
+Ire,Integer
+Sire,SInteger
+Clo,Character
+SetOfClo,String
+FBU,Float
+SFBU,SFloat
+NoneValue,Void
+TerminateThisNow,Break
+RingWhen,Loop
+BackedValue,Return
+STT,Struct
+Check,Switch
+CaseOf,Switch
+Beginning,Start Statement
+End,End Statement
++,Arithmetic Operation
+-,Arithmetic Operation
+*,Arithmetic Operation 
+/,Arithmetic Operation
+&&,Logic operators
+||,Logic operators
+~,Logic operators
+==,relational operators
+<,relational operators
+>,relational operators
+!=,relational operators
+<=,relational operators
+>=,relational operators
+=,Assignment operator
+.,Access Operator
+{,Braces
+},Braces
+[,Braces
+],Braces
+“,Quotation Mark
+’,Quotation Mark
+Using,Inclusion
+/#,Comment
+#/,Comment
+/-,Comment
+@,Delimiter
+;,Delimiter
