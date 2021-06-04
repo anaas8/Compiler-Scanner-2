@@ -1,0 +1,55 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Compiler_Scanner_2 ;
+
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ *
+ * @author DELL
+ */
+public class Compiler_Scanner_2 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws FileNotFoundException {
+        String str = new String();
+        scanner scan = new scanner();
+        scan.RemoveCommentAndWhiteSpaces();
+        scan.seperate();
+        ArrayList<String> Code =  scan.get_code();
+        search s = new search();
+        ArrayList<String> return_token = s.return_result(Code);
+        
+         System.out.println(Code);
+         System.out.println(return_token);
+       
+        Print(Code,return_token);
+    }
+    public static void Print(ArrayList<String> token ,ArrayList<String> token_return){
+        String matched = "Matched";
+        int line_counter =1;
+        int token_counter=0;
+        System.out.println("line NO"+"| |"+"lexeme"+"| |"+"ReturnToken"+"| |"+"LEx_No_ofLine"+"| |"+"Matched");
+     for(int i = 0 ; i < token.size();i++){
+         
+         if(token_return.get(i).equals("void")){
+             matched ="Not matched";}
+         token_counter ++;
+         System.out.println(line_counter+"          "+token.get(i)+"     "+token_return.get(i)+"    "+token_counter+"   "+matched);
+         if(token.get(i).equals(";")||token.get(i).equals("/#")||token.get(i).equals("/-")||token.get(i).equals("#/")){
+             line_counter++;
+             token_counter=0;
+             }
+     
+    
+    }
+
+}
+}
