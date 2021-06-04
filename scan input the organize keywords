@@ -1,0 +1,223 @@
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Compiler_Scanner_2;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
+/**
+ *
+ * @author DELL
+ */
+public class scanner {
+    
+private final Scanner In ;
+private String text_line ;
+private  ArrayList<String> code; 
+    public scanner() {
+        In = new Scanner(System.in);
+        code= new ArrayList<>();
+        String line ;
+        System.out.println("begining..");
+        line = In.nextLine();
+        while(!(equal((String)line,(String)"End"))){
+            code.add(line);
+            line = In.nextLine();
+        }
+        code.add(line);
+    }
+    public void RemoveCommentAndWhiteSpaces(){
+        
+        boolean global_flag =false;
+        
+        for(int i=0;i<this.code.size();i++)//step  line by line 
+        {
+        this.text_line = code.get(i); //access the line 
+        boolean flag =false; //set line comment flag false
+        boolean spaces_flage = false;
+        int[] position_todelete = new int[text_line.length()];
+        int index = 0;
+        for(int j=0;j<this.text_line.length();j++)// take char by char in the line
+        {
+            if (text_line.charAt(j)=='#'){
+                if (text_line.charAt(j+1)=='/')
+                {
+                    global_flag = false;
+                    text_line = this.remove_characters(text_line,position_todelete);
+                
+                }
+                else if (j!=0 &&text_line.charAt(j-1)=='/'){
+                   global_flag = true;
+                  
+            }
+            }
+        
+            else if(text_line.charAt(j)=='-' )
+            {
+                if ( j!=0 && text_line.charAt(j-1)=='/')
+                    flag = true;
+            }
+            else if (text_line.charAt(j)==' '){
+                spaces_flage=true;
+                position_todelete[index++]=j;
+            }
+            
+            else if(flag || global_flag )
+            {
+                position_todelete[index++]=j;
+            }
+            
+        }
+        if(flag||global_flag||spaces_flage)
+            text_line = this.remove_characters(text_line,position_todelete);
+            code.set(i,text_line);
+
+        }
+        
+    }
+    public ArrayList<String> get_code()
+    {
+    return code;
+    }
+  private String remove_characters(String original,int[] locations_to_remove)
+{
+    String result = new String();
+    int last_insert = 0;
+    int index = 0;
+    for (int i = 0; i < original.length(); i++)
+    {
+        if (i != locations_to_remove[index])
+        {
+         result = result + original.charAt(i);
+        }
+        else 
+         index ++;   
+        
+    }
+    return result;
+}
+
+private boolean equal(String x,String y)
+{
+    int sizex = x.length();
+    int sizey = y.length();
+    int counter = 0; 
+    if(sizex == sizey) {
+    for(int i =0;i< sizex ;i++){
+       if(x.charAt(i)==y.charAt(i)) {
+           counter ++;
+       }
+       else 
+           return false;
+    }
+    if(counter==sizex)
+        return true;
+    }
+    return false;
+}
+
+public void seperate()
+{
+    ArrayList<String> temp_code = new ArrayList<>();
+    
+    String word ;
+    for(int i = 0 ; i< this.code.size();i++)
+    {
+        String line = this.code.get(i);
+        word = new String();
+        char partener = 0;
+        boolean partener_active=false;
+    if( line.equals("\n")||line.equals(" ")){
+    }    
+    else if (line.equals("/-")|line.equals("/#")||line.equals("#/")){
+        temp_code.add(this.code.get(i));
+    }
+    else{        
+    for(int j = 0 ; j<line.length();j++){
+    char character = line.charAt(j);
+    if (is_alpha(character)){
+        if (! partener_active)
+        word = word + character;
+        else {
+        partener_active = false;
+        temp_code.add(word);
+        word = new String();
+        word = word + character;
+        }
+    }
+    else {
+    temp_code.add(word);
+    word = new String();
+    word = word + character;
+    if (! have_partener(character))
+    {
+    temp_code.add(word);
+    word = new String();
+    }
+    else if(partener_active){
+        partener_active=false;
+    if(character==partener){
+    word = word + character;
+    temp_code.add(word);
+    word = new String();
+    }else{
+    temp_code.add(word);
+    word = new String();
+    word = word + character;
+    }
+    }
+    else {
+    partener =get_partener(character);
+    partener_active = true;
+    }
+    
+    }   
+    }
+    }
+    
+    }
+    this.code = temp_code;
+}
+private boolean have_partener(char c)
+{
+    if (c=='&'||c=='|'||c=='!'||c=='='||c=='<'||c=='>') return true;
+return false;
+}
+private char get_partener(char c)
+{
+if (c=='|') return '|';
+else if (c=='&') return '&';
+return '=';
+}
+
+public boolean is_alpha(char character )
+{
+    char [] UpperCases = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'} ;
+    char[] lowerCases={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+    char [] numbers={'0','1','2','3','4','5','6','7','8','9'};
+    char underscole = '_';
+    
+    if(underscole==character)
+        return true;
+    for (char i : UpperCases){
+    if(i==character)
+        return true;
+    }
+     for (char i : lowerCases){
+    if(i==character)
+        return true;
+    }
+     for (char i : numbers){
+    if(i==character)
+        return true;
+    }
+     
+return false;
+}
+}
