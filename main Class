@@ -31,12 +31,12 @@ public class Compiler_Scanner_2 {
         Print(Code,return_token);
     }
     public static void Print(ArrayList<String> token ,ArrayList<String> token_return){
-        String matched = "Matched";
+        String matched = new String();
         int line_counter =1;
         int token_counter=0;
         System.out.println("line NO"+"| |"+"lexeme"+"|             |"+"ReturnToken"+"| |"+"LEx_No_ofLine"+"| |"+"Matched");
      for(int i = 0 ; i < token.size();i++){
-         
+         matched = "Matched";
          if(token_return.get(i).equals("void")){
              matched ="Not matched";}
          token_counter ++;
