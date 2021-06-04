@@ -1,0 +1,132 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Compiler_Scanner_2;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ *
+ * @author DELL
+ */
+public class search {
+    private  ArrayList<String> tokens; 
+    private  ArrayList<String> return_tokens; 
+    public search() throws FileNotFoundException {
+        String [] Data = new String[2];
+        tokens = new ArrayList<>();
+        return_tokens= new ArrayList<>() ; 
+      File file = new File("C:\\Users\\DELL\\Documents\\NetBeansProjects\\Compiler_Scanner_2\\src\\tokens.txt");
+      Scanner myReader = new Scanner(file);
+      while (myReader.hasNextLine()) {
+        String data = myReader.nextLine();
+        Data = split(data);
+        String element1=Data[0];
+        String element2=Data[1];
+          tokens.add(element1);
+          return_tokens.add(element2);
+      }
+      myReader.close();
+    }
+    private String[] split(String s ){
+    String[] data = new String[2];
+    String s1 = new String();
+    String s2= new String();
+    boolean part=false;
+    for(int i = 0 ; i< s.length();i++){
+        char c = s.charAt(i);
+    if( c==',')
+    {
+        part = true;
+    }
+    else if (! part){
+    s1 = s1 + c;
+    }
+    else {
+    s2 = s2 +c ;        
+    }
+    }
+    data[0]=s1;
+    data[1]=s2;
+        return data;
+    
+    }
+    
+    public ArrayList<String> return_result(ArrayList<String> data ){
+       ArrayList<String> result = new ArrayList<String>();
+    for(int i = 0 ; i<data.size();i++){
+        String element = data.get(i);
+        String temp = return_token(element);
+        result.add(temp);
+    
+    }
+        return result;
+    }
+    private String return_token(String token){
+    for(int k = 0;k<tokens.size();k++){
+    if(tokens.get(k).equals(token)){
+        String Return_token =return_tokens.get(k);
+        return Return_token;
+    }
+    }
+    if (Is_Identifier(token))
+        return "Identifier";
+    for(int num = 0 ; num<token.length();num++){
+       if(!chick_digit(token.charAt(num))){
+       return "void";
+       }
+    }
+    return "Constant";
+    }
+    private boolean Is_Identifier(String token){
+      if(chick_digit(token.charAt(0))){
+     return false;
+     }
+     for(int i = 0 ; i< token.length();i++){
+         char c = token.charAt(i);
+     if(!is_alpha(c)){
+     return false;
+     }
+     }
+        return true;
+    
+    }
+    private boolean chick_digit(char c){
+    char [] numbers={'0','1','2','3','4','5','6','7','8','9'};
+    for (char i : numbers){
+    if(i==c)
+        return true;
+    }
+        return false;
+     
+    }
+    public boolean is_alpha(char character )
+{
+    char [] UpperCases = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'} ;
+    char[] lowerCases={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+    char [] numbers={'0','1','2','3','4','5','6','7','8','9'};
+    char underscole = '_';
+    
+    if(underscole==character)
+        return true;
+    for (char i : UpperCases){
+    if(i==character)
+        return true;
+    }
+     for (char i : lowerCases){
+    if(i==character)
+        return true;
+    }
+     for (char i : numbers){
+    if(i==character)
+        return true;
+    }
+     
+return false;
+}
+}
