@@ -36,13 +36,17 @@ public class Compiler_Scanner_2 {
         String matched = "Matched";
         int line_counter =1;
         int token_counter=0;
-        System.out.println("line NO"+"| |"+"lexeme"+"| |"+"ReturnToken"+"| |"+"LEx_No_ofLine"+"| |"+"Matched");
+        System.out.println("line NO"+"| |"+"lexeme"+"|             |"+"ReturnToken"+"| |"+"LEx_No_ofLine"+"| |"+"Matched");
      for(int i = 0 ; i < token.size();i++){
          
          if(token_return.get(i).equals("void")){
              matched ="Not matched";}
          token_counter ++;
-         System.out.println(line_counter+"          "+token.get(i)+"     "+token_return.get(i)+"    "+token_counter+"   "+matched);
+         String space1= space(token.get(i));
+         String space2= space(token_return.get(i));
+         String space="          ";
+         
+         System.out.println(line_counter+space+token.get(i)+space1+token_return.get(i)+space2+token_counter+space+matched);
          if(token.get(i).equals(";")||token.get(i).equals("/#")||token.get(i).equals("/-")||token.get(i).equals("#/")){
              line_counter++;
              token_counter=0;
@@ -52,4 +56,12 @@ public class Compiler_Scanner_2 {
     }
 
 }
+
+    final static String space(String s){
+    String space = new String();
+    for(int i = s.length();i<=20;i++)
+        space = space + " ";
+    
+    return space;
+            }
 }
