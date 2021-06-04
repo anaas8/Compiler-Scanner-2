@@ -26,9 +26,7 @@ public class Compiler_Scanner_2 {
         ArrayList<String> Code =  scan.get_code();
         search s = new search();
         ArrayList<String> return_token = s.return_result(Code);
-        
-         System.out.println(Code);
-         System.out.println(return_token);
+
        
         Print(Code,return_token);
     }
