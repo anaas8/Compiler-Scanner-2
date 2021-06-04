@@ -84,9 +84,13 @@ public class search {
     return "Constant";
     }
     private boolean Is_Identifier(String token){
-      if(chick_digit(token.charAt(0))){
-     return false;
+      try {
+          if(chick_digit(token.charAt(0))){
+          return false;
      }
+        } catch (Exception e) {
+        
+        }
      for(int i = 0 ; i< token.length();i++){
          char c = token.charAt(i);
      if(!is_alpha(c)){
